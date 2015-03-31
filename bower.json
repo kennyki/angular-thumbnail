@@ -21,5 +21,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "blueimp-canvas-to-blob": "~2.1.1"
+  }
 }

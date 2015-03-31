@@ -28,7 +28,13 @@
       <input type="text" ng-model="img.other" style="width: 300px">
       <button ng-click="changeToOther()">Apply!</button>
 
+      <h2>Client side thumbnail generation!!!!</h2>
+      <button ng-click="getDataUrl()">Peek at data url</button>
+      <button ng-click="getBlob()">Peek at blob</button>
+
     </div>
+
+    <script src="bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="angular-thumbnail.js"></script>
@@ -36,7 +42,7 @@
     <script>
       angular.module('TestApp', ['ui.thumbnail'])
 
-      .controller('TestController', function($scope) {
+      .controller('TestController', function($scope, ThumbnailService) {
         $scope.img = {
           original: 'http://www.w3schools.com/angular/pic_angular.jpg',
           other: 'https://pbs.twimg.com/profile_images/454374322459525120/CrYC9HBz.png'
@@ -48,6 +54,28 @@
 
         $scope.changeToOther = function changeToOther() {
           $scope.img.original = $scope.img.other;
+        };
+
+        $scope.getDataUrl = function getDataUrl() {
+          ThumbnailService.generate($scope.img.original).then(
+            function success(data) {
+              alert(data.substring(0, 30));
+            },
+            function error(reason) {
+              alert('Error: ' + reason);
+            }
+          );
+        };
+
+        $scope.getBlob = function getBlob() {
+          ThumbnailService.generate($scope.img.original, {returnType: 'blob'}).then(
+            function success(blob) {
+              alert(typeof blob);
+            },
+            function error(reason) {
+              alert('Error: ' + reason);
+            }
+          );
         };
       })
 
