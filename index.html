@@ -10,22 +10,26 @@
     <div ng-controller="TestController">
       <h2>Original image</h2>
       <img ng-src="{{img.original}}">
+      <hr>
 
       <h2>Thumbnail with default settings (100x100)</h2>
       <ui-thumbnail src="img.original"></ui-thumbnail>
+      <hr>
 
       <h2>Thumbnail with custom settings (50x50)</h2>
       <ui-thumbnail src="img.original" opts="settings"></ui-thumbnail>
-
       <h4>Change the custom settings</h4>
       Width: <input type="text" ng-model="settings.width">
       Height: <input type="text" ng-model="settings.height">
+      <hr>
 
       <h2>Thumbnail with custom settings (50x50) but no scope binding (will not change)</h2>
       <ui-thumbnail src="'http://www.w3schools.com/angular/pic_angular.jpg'" opts="{width: 50, height: 50}"></ui-thumbnail>
+      <hr>
 
       <h2>Change image</h2>
       <button ng-click="changeToOther()">Apply!</button>
+      <hr>
 
       <h2>Client side thumbnail generation!!!!</h2>
       <button ng-click="getDataUrl()">Peek at data url</button>
