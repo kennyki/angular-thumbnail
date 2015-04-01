@@ -25,7 +25,6 @@
       <ui-thumbnail src="'http://www.w3schools.com/angular/pic_angular.jpg'" opts="{width: 50, height: 50}"></ui-thumbnail>
 
       <h2>Change image</h2>
-      <input type="text" ng-model="img.other" style="width: 300px">
       <button ng-click="changeToOther()">Apply!</button>
 
       <h2>Client side thumbnail generation!!!!</h2>
@@ -44,8 +43,8 @@
 
       .controller('TestController', function($scope, ThumbnailService) {
         $scope.img = {
-          original: 'http://www.w3schools.com/angular/pic_angular.jpg',
-          other: 'https://pbs.twimg.com/profile_images/454374322459525120/CrYC9HBz.png'
+          original: 'img/pic_angular.jpg',
+          other: 'img/CrYC9HBz.png'
         };
         $scope.settings = {
           width: 50,
