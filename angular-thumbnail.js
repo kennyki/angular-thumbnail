@@ -12,30 +12,38 @@ angular.module('ui.thumbnail', [])
 
     return {
 
-      generate: function generate(url, opts) {
+      generate: function generate(src, opts) {
         var deferred = $q.defer();
 
         opts = opts || {};
 
-        this.load(url, opts).loaded.then(
+        this.load(src, opts).loaded.then(
           function success(canvas) {
             if (opts.returnType === 'blob') {
               if (typeof canvas.toBlob !== 'function') {
                 return deferred.reject('Your browser doesn\'t support canvas.toBlob yet. Please polyfill it.');
               }
 
-              canvas.toBlob(function(blob) {
-                // one may use blob-util to get a URL
-                deferred.resolve(blob);
-              }, opts.type, opts.encoderOptions);
+              try {
+                canvas.toBlob(function(blob) {
+                  // one may use blob-util to get a URL
+                  deferred.resolve(blob);
+                }, opts.type, opts.encoderOptions);
+              } catch (ex) {
+                deferred.reject(ex);
+              }
 
             } else {
               if (typeof canvas.toDataURL !== 'function') {
                 return deferred.reject('Your browser doesn\'t support canvas.toDataURL yet. Please polyfill it.');
               }
 
-              var base64 = canvas.toDataURL(opts.type, opts.encoderOptions);
-              deferred.resolve(base64);
+              try {
+                var base64 = canvas.toDataURL(opts.type, opts.encoderOptions);
+                deferred.resolve(base64);
+              } catch (ex) {
+                deferred.reject(ex);
+              }
             }
           }
         );
@@ -43,18 +51,18 @@ angular.module('ui.thumbnail', [])
         return deferred.promise;
       },
 
-      load: function load(url, opts) {
+      load: function load(src, opts) {
         var canvas = this.createCanvas(opts);
 
         return {
           // creation is done
           created: $q.when(canvas),
           // wait for it
-          loaded: this.draw(canvas, url)
+          loaded: this.draw(canvas, src)
         };
       },
 
-      draw: function draw(canvas, url) {
+      draw: function draw(canvas, src) {
         var deferred = $q.defer();
 
         var ctx = canvas.getContext('2d');
@@ -69,7 +77,7 @@ angular.module('ui.thumbnail', [])
           deferred.resolve(canvas);
         };
 
-        img.src = url;
+        img.src = src;
 
         return deferred.promise;
       },
