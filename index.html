@@ -15,7 +15,7 @@
       <img ng-src="{{img.original}}">
       <hr>
 
-      <h2>Thumbnail with default settings (100x100)</h2>
+      <h2>Thumbnail with overridden default settings (150x150)</h2>
       <ui-thumbnail src="img.original"></ui-thumbnail>
       <hr>
 
@@ -48,6 +48,12 @@
 
     <script>
       angular.module('TestApp', ['ui.thumbnail'])
+
+      .config(function(ThumbnailServiceProvider) {
+        // otherwise they're 100
+        ThumbnailServiceProvider.defaults.width = 150;
+        ThumbnailServiceProvider.defaults.height = 150;
+      })
 
       .controller('TestController', function($scope, ThumbnailService) {
         $scope.img = {
