@@ -41,6 +41,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="angular-thumbnail.js"></script>
+    <script src="img/sample-base64.js"></script>
 
     <script>
       angular.module('TestApp', ['ui.thumbnail'])
@@ -48,7 +49,8 @@
       .controller('TestController', function($scope, ThumbnailService) {
         $scope.img = {
           original: 'img/pic_angular.jpg',
-          other: 'img/CrYC9HBz.png'
+          // this variable is defined in img/sample-base64.js
+          other: sampleBase64
         };
         $scope.settings = {
           width: 50,
