@@ -7,7 +7,7 @@ angular.module('ui.thumbnail', [])
     height: 100
   };
 
-  this.$get = function($q) {
+  this.$get = ['$q', function($q) {
     var defaults = this.defaults;
 
     return {
@@ -102,7 +102,7 @@ angular.module('ui.thumbnail', [])
 
     };
 
-  }; // $get
+  }]; // $get
 
 })
 
