@@ -106,7 +106,7 @@ angular.module('ui.thumbnail', [])
 
 })
 
-.directive('uiThumbnail', function(ThumbnailService) {
+.directive('uiThumbnail', ['ThumbnailService', function(ThumbnailService) {
 
   return {
 
@@ -144,6 +144,4 @@ angular.module('ui.thumbnail', [])
 
   };
 
-})
-
-;
+}]);
