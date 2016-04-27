@@ -1,7 +1,7 @@
 {
   "name": "angular-thumbnail",
-  "main": "angular-thumbnail.js",
-  "version": "0.1.1",
+  "main": "angular-thumbnail.min.js",
+  "version": "0.1.2",
   "authors": [
     "Kenny"
   ],
