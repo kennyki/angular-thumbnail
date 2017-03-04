@@ -56,7 +56,7 @@ A `ThumbnailService` dependency can be injected into a controller.
         - `height`: number (defaults to 100)
         - `returnType`: 'blob' (defaults to 'base64')
         - `type`: 'image/jpeg' (defaults to 'image/png')
-        - `noDistortion`: boolean. If true, the image will not get distorted. (defaults to false)
-        - `encoderOptions`: A number between 0 and 1 indicating image quality if the requested type is 'image/jpeg' or 'image/webp'.
+        - `noDistortion`: boolean. If true, the image will not get distorted. (defaults to false)
+        - `encoderOptions`: A number between 0 and 1 indicating image quality if the requested type is 'image/jpeg' or 'image/webp'.
 
 - Returns: a promise that resolves with a base64 string or blob
