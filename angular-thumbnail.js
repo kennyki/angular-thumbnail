@@ -17,6 +17,10 @@ angular.module('ui.thumbnail', [])
 
         opts = opts || {};
 
+        if (!opts.noDistortion) {
+          opts.noDistortion = false;
+        }
+        
         this.load(src, opts).loaded.then(
           function success(canvas) {
             if (opts.returnType === 'blob') {
@@ -58,20 +62,29 @@ angular.module('ui.thumbnail', [])
           // creation is done
           created: $q.when(canvas),
           // wait for it
-          loaded: this.draw(canvas, src)
+          loaded: this.draw(canvas, src, opts.noDistortion)
         };
       },
 
-      draw: function draw(canvas, src) {
+      draw: function draw(canvas, src, noDistortion) {
         var deferred = $q.defer();
+        var self = this;
 
         var ctx = canvas.getContext('2d');
         // it seems that we cannot reuse image instance for drawing
         var img = new Image();
 
         img.onload = function onload() {
+          
+          var resized = canvas;
+          if (noDistortion ){
+            resized = self.resizeImage(img, canvas);
+            canvas = self.updateCanvas(canvas, resized);
+            ctx = canvas.getContext('2d');
+          }
+          
           // designated canvas dimensions should have been set
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, resized.width, resized.height);
 
           // loading is done
           deferred.resolve(canvas);
@@ -80,6 +93,29 @@ angular.module('ui.thumbnail', [])
         img.src = src;
 
         return deferred.promise;
+      },
+
+      resizeImage: function resizeImage(img, canvas) {
+        var imageRatio = img.width / img.height;
+        
+        var newHeight = canvas.width / imageRatio;
+        var newWidth = canvas.height * imageRatio;
+        
+        var heightDiff = newHeight - canvas.height;
+        var widthDiff = newWidth - canvas.width;
+        
+        if (widthDiff >= heightDiff) {
+          return dimensions(canvas.width, canvas.width / imageRatio);
+        } else {
+          return dimensions(canvas.height * imageRatio, canvas.height);
+        }
+
+        function dimensions(width, height){
+          return {
+            width: width, 
+            height: height
+          };
+        }
       },
 
       createCanvas: function createCanvas(opts) {
