@@ -17,7 +17,7 @@ angular.module('ui.thumbnail', [])
 
         opts = opts || {};
 
-        if(!opts.noDistortion){
+        if (!opts.noDistortion) {
           opts.noDistortion = false;
         }
         
@@ -77,7 +77,7 @@ angular.module('ui.thumbnail', [])
         img.onload = function onload() {
           
           var resized = canvas;
-          if(noDistortion){
+          if (noDistortion ){
             resized = self.resizeImage(img, canvas);
             canvas = self.updateCanvas(canvas, resized);
             ctx = canvas.getContext('2d');
@@ -95,7 +95,7 @@ angular.module('ui.thumbnail', [])
         return deferred.promise;
       },
 
-      resizeImage: function resizeImage(img, canvas){
+      resizeImage: function resizeImage(img, canvas) {
         var imageRatio = img.width / img.height;
         
         var newHeight = canvas.width / imageRatio;
@@ -105,7 +105,7 @@ angular.module('ui.thumbnail', [])
         var widthDiff = newWidth - canvas.width;
         
         if (widthDiff >= heightDiff) {
-            return dimensions(canvas.width, canvas.width / imageRatio );
+          return dimensions(canvas.width, canvas.width / imageRatio);
         } else {
           return dimensions(canvas.height * imageRatio, canvas.height);
         }
@@ -116,7 +116,6 @@ angular.module('ui.thumbnail', [])
             height: height
           };
         }
-
       },
 
       createCanvas: function createCanvas(opts) {
